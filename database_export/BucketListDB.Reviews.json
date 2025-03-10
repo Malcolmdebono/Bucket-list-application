@@ -1,0 +1,14 @@
+[{
+  "_id": {
+    "$oid": "67cefba26ea754bbcec4c067"
+  },
+  "user_id": {
+    "$oid": "67cc991928452d26b9b2da88"
+  },
+  "experience_id": {
+    "$oid": "67cef16a6ea754bbcec4c034"
+  },
+  "avatar": "https://unsplash.com/photos/a-woman-with-red-hair-is-posing-for-a-picture-K-cWB8CfSCY",
+  "review": "Great visit.",
+  "rating": 5
+}]

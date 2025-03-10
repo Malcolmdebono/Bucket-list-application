@@ -1,0 +1,12 @@
+[{
+  "_id": {
+    "$oid": "67cca53328452d26b9b2da93"
+  },
+  "user_id": {
+    "$oid": "67cc991928452d26b9b2da88"
+  },
+  "title": "First List",
+  "created_at": {
+    "$date": "2024-03-08T11:30:00.000Z"
+  }
+}]

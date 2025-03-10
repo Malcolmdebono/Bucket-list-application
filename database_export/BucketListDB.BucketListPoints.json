@@ -1,0 +1,13 @@
+[{
+  "_id": {
+    "$oid": "67cca6ed28452d26b9b2da9b"
+  },
+  "list_id": {
+    "$oid": "67cca53328452d26b9b2da93"
+  },
+  "pointname": "Go for a walk",
+  "status": "Pending",
+  "created": {
+    "$date": "2024-03-08T12:35:00.000Z"
+  }
+}]
