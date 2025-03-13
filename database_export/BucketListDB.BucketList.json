@@ -6,7 +6,7 @@
     "$oid": "67cc991928452d26b9b2da88"
   },
   "title": "First List",
-  "created_at": {
+  "created": {
     "$date": "2024-03-08T11:30:00.000Z"
   }
 }]

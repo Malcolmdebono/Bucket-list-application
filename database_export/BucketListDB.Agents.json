@@ -4,5 +4,21 @@
   },
   "name": "Bartholomew Hubert",
   "email": "Barth23@example.com",
-  "avatar": "https://unsplash.com/photos/portrait-of-smiling-young-woman-with-short-pixie-haircut-looking-cheerfully-at-camera-while-standing-against-grey-background-in-studio-copy-space-lIz1wBR43HE"
+  "avatar": "https://images.unsplash.com/photo-1617925357736-8a4ea869b800?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+},
+{
+  "_id": {
+    "$oid": "67d2e76cc82bd3de6f84f7fa"
+  },
+  "name": "Maria Damiano",
+  "email": "DamianoM2@gmail.com",
+  "avatar": "https://images.unsplash.com/photo-1612307770126-f318cb35b542?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+},
+{
+  "_id": {
+    "$oid": "67d2e7cac82bd3de6f84f7fb"
+  },
+  "name": "Vince Gilligan",
+  "email": "vincegil@example.com",
+  "avatar": "https://images.unsplash.com/photo-1682391129792-4c1265dd5da8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 }]
