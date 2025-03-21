@@ -14,7 +14,6 @@ import { useGlobalContext } from '@/lib/global-provider';
 // Import Redirect from expo-router to handle navigation.
 import { Redirect } from "expo-router";
 
-// Note: The comments "resizemode->contain // cover" likely indicate the intended resize mode usage for images.
 
 // Define the SignIn component.
 const SignIn = () => {
