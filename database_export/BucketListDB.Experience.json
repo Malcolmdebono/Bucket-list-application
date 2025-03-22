@@ -16,7 +16,7 @@
   "gallery_id": {
     "$oid": "67cef8806ea754bbcec4c041"
   },
-  "review_ids": [
+  "review_id": [
     {
       "$oid": "67cefba26ea754bbcec4c067"
     }
@@ -38,9 +38,9 @@
     "$oid": "67d2e76cc82bd3de6f84f7fa"
   },
   "gallery_id": {
-    "$oid": "67d2e8aac82bd3de6f84f803"
+    "$oid": "67dac62ea01f6c6b895279ce"
   },
-  "review_ids": []
+  "review_id": []
 },
 {
   "_id": {
@@ -58,9 +58,9 @@
     "$oid": "67d2e7cac82bd3de6f84f7fb"
   },
   "gallery_id": {
-    "$oid": "67cf73866ea754bbcec4c0eb"
+    "$oid": "67dac676a01f6c6b895279cf"
   },
-  "review_ids": []
+  "review_id": []
 },
 {
   "_id": {
@@ -78,7 +78,7 @@
     "$oid": "67d2e7cac82bd3de6f84f7fb"
   },
   "gallery_id": {
-    "$oid": "67d2e8cdc82bd3de6f84f804"
+    "$oid": "67dac696a01f6c6b895279d0"
   },
-  "review_ids": []
+  "review_id": []
 }]

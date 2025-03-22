@@ -1,0 +1,245 @@
+Below are the validation scripts so only necessary information is saved into each collection
+
+//Agent Collection
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      'name',
+      'email'
+    ],
+    properties: {
+      name: {
+        bsonType: 'string',
+        description: 'Agent name'
+      },
+      email: {
+        bsonType: 'string',
+        description: 'Agent email'
+      },
+      avatar: {
+        bsonType: 'string',
+        description: 'Agent profile picture'
+      }
+    }
+  }
+}
+
+//BucketList Collection 
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      'title',
+      'created',
+      'user_id'
+    ],
+    properties: {
+      title: {
+        bsonType: 'string',
+        description: 'name of entire bucketlist'
+      },
+      created: {
+        bsonType: 'date',
+        description: 'When the bucketlist was created'
+      },
+      user_id: {
+        bsonType: 'objectId',
+        description: 'Relationship to the users id in the database'
+      }
+    }
+  }
+}
+//BucketListPoints Collection
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      'list_id',
+      'pointname',
+      'status',
+      'created'
+    ],
+    properties: {
+      list_id: {
+        bsonType: 'objectId',
+        description: 'Relationship with Bucketlist'
+      },
+      pointname: {
+        bsonType: 'string',
+        description: 'name of the point in the bucketlist'
+      },
+      status: {
+        bsonType: 'string',
+        'enum': [
+          'Pending',
+          'Done'
+        ],
+        description: 'if the point has been completed or not'
+      },
+      created: {
+        bsonType: 'date',
+        description: 'when point was made'
+      }
+    }
+  }
+}
+
+//Experience Collection
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      'name',
+      'type',
+      'description',
+      'address',
+      'price',
+      'rating',
+      'image',
+      'geolocation'
+    ],
+    properties: {
+      name: {
+        bsonType: 'string',
+        description: 'Name of experience'
+      },
+      type: {
+        bsonType: 'string',
+        description: 'What criteria the experience fits'
+      },
+      description: {
+        bsonType: 'string',
+        description: 'Description of the experience'
+      },
+      address: {
+        bsonType: 'string',
+        description: 'Location'
+      },
+      price: {
+        bsonType: [
+          'int',
+          'double'
+        ],
+        minimum: 0,
+        description: 'Price of experience'
+      },
+      rating: {
+        bsonType: [
+          'int',
+          'double'
+        ],
+        minimum: 0,
+        maximum: 5,
+        description: '0stars - 5stars'
+      },
+      image: {
+        bsonType: 'string',
+        description: 'URL link to an image'
+      },
+      geolocation: {
+        bsonType: 'string',
+        description: 'Location on map'
+      },
+      agent_id: {
+        bsonType: 'objectId',
+        description: 'Agent relationship'
+      },
+      gallery_id: {
+        bsonType: 'objectId',
+        description: 'Gallery relationship'
+      },
+      review_id: {
+        bsonType: 'array',
+        items: {
+          bsonType: 'objectId',
+          description: 'Array of review relationships'
+        }
+      }
+    }
+  }
+}
+
+//Galleries Collection
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      'experience_id',
+      'name',
+      'images'
+    ],
+    properties: {
+      experience_id: {
+        bsonType: 'objectId',
+        description: 'id of activity'
+      },
+      experience_name: {
+        bsonType: 'string',
+        description: 'name of activity'
+      },
+      images: {
+        bsonType: 'array',
+        items: {
+          bsonType: 'string',
+          description: 'URL of images'
+        }
+      }
+    }
+  }
+}
+
+//Reviews Collection
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      'user_id',
+      'review',
+      'rating',
+      'experience_id'
+    ],
+    properties: {
+      user_id: {
+        bsonType: 'objectId',
+        description: 'user id that wrote the review'
+      },
+      review: {
+        bsonType: 'string',
+        description: 'words about review'
+      },
+      rating: {
+        bsonType: [
+          'int',
+          'double'
+        ],
+        minimum: 1,
+        maximum: 5,
+        description: '0stars - 5stars'
+      },
+      experience_id: {
+        bsonType: 'objectId',
+        description: 'the experience the user fulfilled'
+      }
+    }
+  }
+}
+//Users Collection
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      'email'
+    ],
+    properties: {
+      email: {
+        bsonType: 'string',
+        description: 'Email of user'
+      },
+      created: {
+        bsonType: 'date',
+        description: 'when account was made'
+      }
+    }
+  }
+}
