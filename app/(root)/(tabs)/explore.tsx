@@ -1,7 +1,7 @@
-// Import necessary functions and components from expo-router and react-native libraries.
 import { Link, router, useLocalSearchParams } from "expo-router";
-import { Text, View, Image, TouchableOpacity, FlatList, Button, ActivityIndicator } from "react-native";
+import { Text, View, Image, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useEffect, useState } from "react";
 
 // Import static assets and custom components.
 import images from "@/constants/images";
@@ -10,67 +10,74 @@ import Search from "@/components/Search";
 import { Card, FeaturedCard } from "@/components/Cards";
 import Filters from "@/components/Filters";
 import { useGlobalContext } from "@/lib/global-provider";
-import seed from "@/lib/seed";
-import { useAppwrite } from "@/lib/useAppwrite";
-import { getLatestProperties, getProperties } from "@/lib/appwrite";
-import { useEffect } from "react";
 import NoResult from "@/components/NoResult";
 
-// Define and export the Explore component.
 export default function Explore() {
-  // Retrieve search parameters (query and filter) from the URL using expo-router hook.
-  const params = useLocalSearchParams<{ query?: string; filter?: string; }>();
+  // Retrieve search parameters (query and filter) from the URL.
+  const params = useLocalSearchParams<{ query?: string; filter?: string }>();
+  const { user } = useGlobalContext();
 
-  // Use the custom hook to fetch data with given parameters.
-  // 'skip: true' is used to avoid an initial automatic fetch.
-  const { data: properties, loading, refetch } = useAppwrite({
-    fn: getProperties,
-    params: {
-      filter: params.filter!,
-      query: params.query!,
-      limit: 6,
-    },
-    skip: true,
-  });
+  // Local state for experiences.
+  const [experiences, setExperiences] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  // Function to handle card press events, navigating to the property details page.
-  const handleCardPress = (id: string) => router.push(`/properties/${id}`);
+  // Set your backend URL (update the IP address as needed).
+  // For Android emulator, you might use 'http://10.0.2.2:3000'
+  const BASE_URL = "http://192.168.1.198:3000";
 
-  // useEffect hook to trigger refetch when the filter or query parameters change.
+  // Function to fetch experiences from your backend.
+  async function fetchExperiences(filter: string, query: string, limit: number) {
+    setLoading(true);
+    try {
+      const url = `${BASE_URL}/api/experience?filter=${encodeURIComponent(filter)}&query=${encodeURIComponent(query)}&limit=${limit}`;
+      console.log("Fetching experiences from:", url);
+      const response = await fetch(url);
+      const data = await response.json();
+      setExperiences(data);
+    } catch (error) {
+      console.error("Error fetching experiences:", error);
+      setExperiences([]);
+    }
+    setLoading(false);
+  }
+
+  // Fetch experiences when the filter or query parameters change.
   useEffect(() => {
-    refetch({
-      filter: params.filter!,
-      query: params.query!,
-      limit: 20,
-    });
+    const filter = params.filter || "";
+    const query = params.query || "";
+    // In this example, we're using a limit of 20 on re-fetch.
+    fetchExperiences(filter, query, 20);
   }, [params.filter, params.query]);
 
-  // Render the UI components for the Explore screen.
+  // Navigate to the experience detail screen.
+  const handleCardPress = (id: string) => router.push(`/experience/${id}`);
+
   return (
-    // SafeAreaView ensures the content is rendered within safe boundaries on devices.
     <SafeAreaView className="bg-white h-full">
-      {/* FlatList used to render a list/grid of property cards */}
       <FlatList
-        data={properties}
-        // Render each item using the Card component, passing the item and onPress event handler.
-        renderItem={({ item }) => <Card item={item} onPress={() => handleCardPress(item.$id)} />}
-        // Generate unique keys for each item.
-        keyExtractor={(item) => item.toString()}
+        data={experiences}
+        renderItem={({ item }) => (
+          <Card item={item} onPress={() => handleCardPress(item._id?.toString() || item.id?.toString())} />
+        )}
+        // Use the MongoDB _id field as the key.
+        keyExtractor={(item) => item._id?.toString() || ""}
         numColumns={2}
         contentContainerClassName="pb-32"
         columnWrapperClassName="flex gap-5 px-5"
         showsHorizontalScrollIndicator={false}
-        // Display an ActivityIndicator when loading; otherwise, show NoResult component.
+        // Display an ActivityIndicator if loading; otherwise, show NoResult if no data.
         ListEmptyComponent={
           loading ? (
             <ActivityIndicator size="large" className="text-primary-300 mt-5" />
-          ) : <NoResult />
+          ) : (
+            <NoResult />
+          )
         }
-        // Header component for the FlatList that includes a back button, title, search bar, and filters.
+        // Header component for the FlatList including back button, title, search bar, filters, etc.
         ListHeaderComponent={
           <View className="px-5">
             <View className="flex flex-row items-center justify-between mt-5">
-              {/* Back button to navigate to the previous screen */}
+              {/* Back button */}
               <TouchableOpacity onPress={() => router.back()} className="flex flex-row bg-primary-200 rounded-full size-11 items-center justify-center">
                 <Image source={icons.backArrow} className="size-5" />
               </TouchableOpacity>
@@ -80,19 +87,17 @@ export default function Explore() {
                 Find New Experiences
               </Text>
 
-              {/* Bell icon (possibly for notifications) */}
+              {/* Bell icon */}
               <Image source={icons.bell} className="w-6 h-6" />
             </View>
-            {/* Render the Search component */}
+            {/* Search component */}
             <Search />
-
             <View className="mt-5">
-              {/* Render the Filters component */}
+              {/* Filters component */}
               <Filters />
-
               {/* Display the number of experiences found */}
               <Text className="text-xl font-rubik-bold text-black-300 mt-5">
-                Found {properties?.length} Experiences
+                Found {experiences?.length} Experiences
               </Text>
             </View>
           </View>
