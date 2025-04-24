@@ -1,0 +1,18 @@
+[
+    {
+      "_id": "67cc991928452d26b9b2da88", 
+      "savedExperiences": [
+        {
+          "_id": "67cf07196ea754bbcec4c0cc",  
+          "name": "Spain Travel",
+          "type": "Travel to Spain",
+          "description": "Visit the most popular cathedral in Spain.",
+          "price": 150,
+          "rating": 4,
+          "image": "https://images.unsplash.com/photo-1509840841025-9088ba78a826?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "address": "Cathedral of Saint Mary of the See, Seville, Spain"
+        }
+      ]
+    }
+  ]
+  
