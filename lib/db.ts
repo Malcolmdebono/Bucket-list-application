@@ -15,7 +15,7 @@ export async function connectToDatabase(): Promise<Db> {
 }
 
 /**
- * Fetch the latest 5 properties sorted by creation date in ascending order.
+ * Fetch the latest 5 experience sorted by creation date in ascending order.
  */
 export async function getLatestProperties() {
   try {
@@ -34,7 +34,7 @@ export async function getLatestProperties() {
 }
 
 /**
- * Fetch properties based on filter, query, and an optional limit.
+ * Fetch experience based on filter, query, and an optional limit.
  */
 export async function getProperties({
   filter,
@@ -74,7 +74,7 @@ export async function getProperties({
     const properties = await cursor.toArray();
     return properties;
   } catch (error) {
-    console.error("Error fetching properties:", error);
+    console.error("Error fetching:", error);
     return [];
   }
 }
