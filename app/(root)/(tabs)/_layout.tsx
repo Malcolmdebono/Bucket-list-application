@@ -67,6 +67,19 @@ const TabsLayout = () => {
             }}
         />
 
+        {/* Define the MyBucket tab screen */}
+        <Tabs.Screen
+            name="mybucket"
+            options={{
+                title: 'mybucket',
+                headerShown: false,
+                // Use TabIcon to render the Profile tab icon and label.
+                tabBarIcon: ({ focused }) => (
+                    <TabIcon icon={icons.bucketlist} focused={focused} title="MyBucket"/>
+                )
+            }}
+        />
+
         {/* Define the Profile tab screen */}
         <Tabs.Screen
             name="profile"
@@ -79,6 +92,8 @@ const TabsLayout = () => {
                 )
             }}
         />
+
+        
 
     </Tabs>
   )
