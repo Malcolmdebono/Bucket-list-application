@@ -1,5 +1,13 @@
-import { Link, router, useLocalSearchParams } from "expo-router";
-import { Text, View, Image, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
+// app/explore.tsx
+import { router, useLocalSearchParams } from "expo-router";
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 
@@ -7,7 +15,7 @@ import { useEffect, useState } from "react";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 import Search from "@/components/Search";
-import { Card, FeaturedCard } from "@/components/Cards";
+import { Card } from "@/components/Cards";
 import Filters from "@/components/Filters";
 import { useGlobalContext } from "@/lib/global-provider";
 import NoResult from "@/components/NoResult";
@@ -21,17 +29,32 @@ export default function Explore() {
   const [experiences, setExperiences] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Set your backend URL (update the IP address as needed).
-  // For Android emulator, you might use 'http://10.0.2.2:3000'
+  // Your backend base URL.
   const BASE_URL = "http://192.168.1.198:3000";
+
+  // Hard-coded JWT for quick testing
+  const TEST_JWT =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluX3ZpbGxpeWFtMiIsImlhdCI6MTc0NjM5ODMzOSwiZXhwIjoxNzQ2NDAxOTM5fQ.0vqMLjpn2ybJweBSbkjSOA_XQOPf9UumAnIMQ5evt1U";
 
   // Function to fetch experiences from your backend.
   async function fetchExperiences(filter: string, query: string, limit: number) {
     setLoading(true);
     try {
-      const url = `${BASE_URL}/api/experience?filter=${encodeURIComponent(filter)}&query=${encodeURIComponent(query)}&limit=${limit}`;
+      const url = `${BASE_URL}/api/experience?filter=${encodeURIComponent(
+        filter
+      )}&query=${encodeURIComponent(query)}&limit=${limit}`;
       console.log("Fetching experiences from:", url);
-      const response = await fetch(url);
+
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${TEST_JWT}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Status ${response.status}`);
+      }
+
       const data = await response.json();
       setExperiences(data);
     } catch (error) {
@@ -50,14 +73,18 @@ export default function Explore() {
   }, [params.filter, params.query]);
 
   // Navigate to the experience detail screen.
-  const handleCardPress = (id: string) => router.push(`/experience/${id}`);
+  const handleCardPress = (id: string) =>
+    router.push(`/experience/${id}`);
 
   return (
     <SafeAreaView className="bg-white h-full">
       <FlatList
         data={experiences}
         renderItem={({ item }) => (
-          <Card item={item} onPress={() => handleCardPress(item._id?.toString() || item.id?.toString())} />
+          <Card
+            item={item}
+            onPress={() => handleCardPress(item._id?.toString() || "")}
+          />
         )}
         // Use the MongoDB _id field as the key.
         keyExtractor={(item) => item._id?.toString() || ""}
@@ -68,7 +95,10 @@ export default function Explore() {
         // Display an ActivityIndicator if loading; otherwise, show NoResult if no data.
         ListEmptyComponent={
           loading ? (
-            <ActivityIndicator size="large" className="text-primary-300 mt-5" />
+            <ActivityIndicator
+              size="large"
+              className="text-primary-300 mt-5"
+            />
           ) : (
             <NoResult />
           )
@@ -78,7 +108,10 @@ export default function Explore() {
           <View className="px-5">
             <View className="flex flex-row items-center justify-between mt-5">
               {/* Back button */}
-              <TouchableOpacity onPress={() => router.back()} className="flex flex-row bg-primary-200 rounded-full size-11 items-center justify-center">
+              <TouchableOpacity
+                onPress={() => router.back()}
+                className="flex flex-row bg-primary-200 rounded-full size-11 items-center justify-center"
+              >
                 <Image source={icons.backArrow} className="size-5" />
               </TouchableOpacity>
 
@@ -97,7 +130,7 @@ export default function Explore() {
               <Filters />
               {/* Display the number of experiences found */}
               <Text className="text-xl font-rubik-bold text-black-300 mt-5">
-                Found {experiences?.length} Experiences
+                Found {experiences.length} Experiences
               </Text>
             </View>
           </View>

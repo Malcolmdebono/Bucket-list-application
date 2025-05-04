@@ -1,7 +1,12 @@
 // db.ts
 import { MongoClient, Db } from "mongodb";
+import dotenv from "dotenv";
 
-const uri = "mongodb+srv://vladimiriliev05:N8u1H7Neo00S9xlE@bucketlistcluster.9pmvm.mongodb.net/?retryWrites=true&w=majority&appName=BucketListCluster";
+const uri = process.env.MONGODB_URI;
+if (!uri) {
+  throw new Error("Please define MONGODB_URI in your .env.local");
+}
+
 const client = new MongoClient(uri);
 
 let cachedDb: Db | null = null;

@@ -1,3 +1,4 @@
+// app/index.tsx
 import { router, useLocalSearchParams } from "expo-router";
 import {
   Text,
@@ -10,6 +11,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 
+// Import your static assets and custom components.
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 import Search from "@/components/Search";
@@ -19,50 +21,77 @@ import { useGlobalContext } from "@/lib/global-provider";
 import NoResult from "@/components/NoResult";
 
 export default function Index() {
+  // Retrieve query and filter parameters from the URL.
   const params = useLocalSearchParams<{ query?: string; filter?: string }>();
+  // Get user data from the global context.
   const { user } = useGlobalContext();
 
+  // Local state for featured (latest) experiences.
   const [latestExperiences, setLatestExperiences] = useState<any[]>([]);
-  const [latestLoading, setLatestLoading]       = useState(true);
-  const [experiences, setExperiences]           = useState<any[]>([]);
-  const [loading, setLoading]                   = useState(true);
+  const [latestLoading, setLatestLoading] = useState<boolean>(true);
 
+  // Local state for filtered experiences.
+  const [experiences, setExperiences] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // Your backend base URL.
   const BASE_URL = "http://192.168.1.198:3000";
 
+  // Hard-coded JWT for quick testing:
+  const TEST_JWT =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluX3ZpbGxpeWFtMiIsImlhdCI6MTc0NjM5ODMzOSwiZXhwIjoxNzQ2NDAxOTM5fQ.0vqMLjpn2ybJweBSbkjSOA_XQOPf9UumAnIMQ5evt1U";
+
+  // Fetch the latest experiences on mount, using the hard-coded token.
   useEffect(() => {
-    async function fetchLatest() {
+    async function fetchLatestExperiences() {
       setLatestLoading(true);
       try {
-        const res = await fetch(`${BASE_URL}/api/experience/latest`);
-        setLatestExperiences(await res.json());
-      } catch {
+        const res = await fetch(`${BASE_URL}/api/experience/latest`, {
+          headers: {
+            Authorization: `Bearer ${TEST_JWT}`,
+          },
+        });
+        if (!res.ok) throw new Error(`Status ${res.status}`);
+        const data = await res.json();
+        setLatestExperiences(data);
+      } catch (error) {
+        console.error("Error fetching latest experiences:", error);
         setLatestExperiences([]);
       }
       setLatestLoading(false);
     }
-    fetchLatest();
+    fetchLatestExperiences();
   }, []);
 
+  // Fetch experiences whenever the filter or query parameters change, using the hard-coded token.
   useEffect(() => {
-    async function fetchList() {
+    async function fetchExperiences() {
       setLoading(true);
-      const filter = params.filter || "";
-      const query  = params.query  || "";
-      const url    = `${BASE_URL}/api/experience?filter=${encodeURIComponent(
-        filter
-      )}&query=${encodeURIComponent(query)}&limit=6`;
       try {
-        const res = await fetch(url);
-        setExperiences(await res.json());
-      } catch {
+        const filter = params.filter || "";
+        const query = params.query || "";
+        const url = `${BASE_URL}/api/experience?filter=${encodeURIComponent(
+          filter
+        )}&query=${encodeURIComponent(query)}&limit=6`;
+
+        const res = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${TEST_JWT}`,
+          },
+        });
+        if (!res.ok) throw new Error(`Status ${res.status}`);
+        const data = await res.json();
+        setExperiences(data);
+      } catch (error) {
+        console.error("Error fetching experiences:", error);
         setExperiences([]);
       }
       setLoading(false);
     }
-    fetchList();
+    fetchExperiences();
   }, [params.filter, params.query]);
 
-  // <-- Here’s the fix: push to /experience/:id so it matches app/experience/[id].tsx
+  // Navigate to the experience details screen.
   const handleCardPress = (id: string) => {
     router.push(`/experience/${id}`);
   };
@@ -71,27 +100,27 @@ export default function Index() {
     <SafeAreaView className="bg-white h-full">
       <FlatList
         data={experiences}
-        numColumns={2}
-        columnWrapperClassName="flex gap-5 px-5"
-        contentContainerClassName="pb-32"
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item) => item._id?.toString() || ""}
         renderItem={({ item }) => (
           <Card
             item={item}
             onPress={() => handleCardPress(item._id?.toString() || "")}
           />
         )}
+        keyExtractor={(item) => item._id?.toString() || ""}
+        numColumns={2}
+        contentContainerClassName="pb-32"
+        columnWrapperClassName="flex gap-5 px-5"
+        showsHorizontalScrollIndicator={false}
         ListEmptyComponent={
           loading ? (
-            <ActivityIndicator size="large" className="mt-5" />
+            <ActivityIndicator size="large" className="text-primary-300 mt-5" />
           ) : (
             <NoResult />
           )
         }
         ListHeaderComponent={
           <View className="px-5">
-            {/* User header */}
+            {/* Header section with user info */}
             <View className="flex flex-row items-center justify-between mt-5">
               <View className="flex flex-row items-center">
                 <Image
@@ -99,9 +128,7 @@ export default function Index() {
                   className="size-12 rounded-full"
                 />
                 <View className="ml-2">
-                  <Text className="text-xs font-rubik text-black-100">
-                    Collab
-                  </Text>
+                  <Text className="text-xs font-rubik text-black-100">Collab</Text>
                   <Text className="text-base font-rubik-medium text-black-300">
                     {user?.name}
                   </Text>
@@ -110,10 +137,10 @@ export default function Index() {
               <Image source={icons.bell} className="size-6" />
             </View>
 
-            {/* Search bar */}
+            {/* Search component */}
             <Search />
 
-            {/* Featured section */}
+            {/* Featured experiences section */}
             <View className="my-5">
               <View className="flex flex-row items-center justify-between">
                 <Text className="text-xl font-rubik-bold text-black-300">
@@ -127,30 +154,28 @@ export default function Index() {
               </View>
 
               {latestLoading ? (
-                <ActivityIndicator size="large" className="mt-5" />
-              ) : latestExperiences.length === 0 ? (
+                <ActivityIndicator size="large" className="text-primary-300 mt-5" />
+              ) : !latestExperiences || latestExperiences.length === 0 ? (
                 <NoResult />
               ) : (
                 <FlatList
                   data={latestExperiences}
+                  renderItem={({ item }) => (
+                    <FeaturedCard
+                      item={item}
+                      onPress={() => handleCardPress(item._id?.toString() || "")}
+                    />
+                  )}
+                  keyExtractor={(item) => item._id?.toString() || ""}
                   horizontal
                   bounces={false}
                   showsHorizontalScrollIndicator={false}
                   contentContainerClassName="flex gap-5 mt-5"
-                  keyExtractor={(item) => item._id?.toString() || ""}
-                  renderItem={({ item }) => (
-                    <FeaturedCard
-                      item={item}
-                      onPress={() =>
-                        handleCardPress(item._id?.toString() || "")
-                      }
-                    />
-                  )}
                 />
               )}
             </View>
 
-            {/* Recommendation section */}
+            {/* Recommended section */}
             <View className="flex flex-row items-center justify-between">
               <Text className="text-xl font-rubik-bold text-black-300">
                 Our Recommendation
@@ -161,8 +186,6 @@ export default function Index() {
                 </Text>
               </TouchableOpacity>
             </View>
-
-            {/* Filters */}
             <Filters />
           </View>
         }

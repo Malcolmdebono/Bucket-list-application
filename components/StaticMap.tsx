@@ -12,9 +12,22 @@ export default function StaticMap({
   lng: number;
   label?: string;
 }) {
-  const url = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}` +
-              `&zoom=14&size=600x300&markers=color:red%7Clabel:${label || ""}%7C${lat},${lng}` +
-              `&key=${API_KEY}`;
+  // Build marker param—omit “label:” when there's no label
+  const markerParam = label
+    ? `&markers=color:red%7Clabel:${encodeURIComponent(label)}%7C${lat},${lng}`
+    : `&markers=color:red%7C${lat},${lng}`;
+
+  const url =
+    `https://maps.googleapis.com/maps/api/staticmap` +
+    `?center=${lat},${lng}` +
+    `&zoom=14` +
+    `&size=600x300` +
+    `&scale=2` +            // optional, for 2× resolution
+    markerParam +
+    `&key=${API_KEY}`;
+
+  // (for debugging—remove in production)
+  console.log("StaticMap URL:", url);
 
   return (
     <TouchableOpacity

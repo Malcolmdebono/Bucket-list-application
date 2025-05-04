@@ -33,7 +33,7 @@ export default function RootLayout() {
   // Render the app's global provider and the stack navigator with header hidden.
   return (
     <GlobalProvider>
-        <Stack screenOptions={{headerShown: false}}/>;
+        <Stack screenOptions={{headerShown: false}}/>
     </GlobalProvider>
   ) 
 }
