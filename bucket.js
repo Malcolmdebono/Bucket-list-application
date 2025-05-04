@@ -17,7 +17,7 @@ async function run() {
 
     const database = client.db("BucketListDB");
     const usersCollection = database.collection("Users");
-    const itemsCollection = database.collection("Items"); // Or "Experience" if you prefer
+    const itemsCollection = database.collection("Items"); 
 
     // API: Get items with user_id
     app.get('/api/items', async (req, res) => {
@@ -28,7 +28,7 @@ async function run() {
           return res.status(400).json({ error: 'user_id is required' });
         }
 
-        // Find the user first (optional, if you want to validate user exists)
+        
         const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
         if (!user) {
           return res.status(404).json({ error: 'User not found' });
