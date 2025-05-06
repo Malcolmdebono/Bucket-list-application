@@ -4,7 +4,14 @@ const { MongoClient, ObjectId } = require('mongodb');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',  
+    'capacitor://localhost',  
+    'ionic://localhost',    
+    'http://localhost',      
+  ]
+}));
 app.use(express.json());
 
 app.disable('x-powered-by'); 
