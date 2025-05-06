@@ -7,6 +7,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.disable('x-powered-by'); 
+
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 
