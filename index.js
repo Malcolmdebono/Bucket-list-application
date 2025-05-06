@@ -9,6 +9,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.disable('x-powered-by');
+
 const client = new MongoClient(process.env.MONGODB_URI);
 
 // --- JWT authentication middleware ---
