@@ -2,8 +2,17 @@
   "_id": {
     "$oid": "67cc991928452d26b9b2da88"
   },
-  "email": "jonathan@gmail.com",
-  "created": {
-    "$date": "2024-03-08T12:00:00.000Z"
-  }
+  "email": "jonathan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "680e87a0f6c16ae9c9c5387c"
+  },
+  "email": "jackvilliyam312@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "680f9fb6993386688a6ac431"
+  },
+  "email": "pearlbartolo488@gmail.com"
 }]

@@ -3,13 +3,13 @@
     "$oid": "67cf07196ea754bbcec4c0cc"
   },
   "name": "Spain Travel",
-  "type": "Travel to Spain",
+  "type": "Travel",
   "description": "Visit the most popular cathedral in Spain.",
   "address": "Cathedral of Saint Mary of the See, Seville, Spain",
   "price": 150,
   "rating": 4,
   "image": "https://images.unsplash.com/photo-1509840841025-9088ba78a826?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "geolocation": "37.384831794 -5.98916271",
+  "geolocation": "37.384831794, -5.98916271",
   "agent_id": {
     "$oid": "67cef9836ea754bbcec4c049"
   },
@@ -27,13 +27,13 @@
     "$oid": "67d2ea76c82bd3de6f84f809"
   },
   "name": "Paris Sightseeing",
-  "type": "City tour",
+  "type": "Travel",
   "description": "Visit the beautiful city of France.",
   "address": "Av. Gustave Eiffel, 75007 Paris, France",
   "price": 200,
   "rating": 4.5,
   "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1473&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "geolocation": "48.858093 2.2946",
+  "geolocation": "48.858093, 2.2946",
   "agent_id": {
     "$oid": "67d2e76cc82bd3de6f84f7fa"
   },
@@ -53,7 +53,7 @@
   "price": 530,
   "rating": 4.7,
   "image": "https://images.unsplash.com/photo-1557409518-691ebcd96038?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "geolocation": "35.652832 139.839478",
+  "geolocation": "35.652832, 139.839478",
   "agent_id": {
     "$oid": "67d2e7cac82bd3de6f84f7fb"
   },
@@ -67,18 +67,138 @@
     "$oid": "67d2ec25c82bd3de6f84f810"
   },
   "name": "Malta Diving",
-  "type": "Scuba Diving",
+  "type": "Education",
   "description": "Dive into the crystal clear waters of Malta",
   "address": "The Boathouse, Triq il-Fekruna, St Paul's Bay SPB 4813",
   "price": 299,
   "rating": 4.6,
   "image": "https://images.unsplash.com/photo-1645059986162-d077871822b6?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "geolocation": "35.94959 14.38033",
+  "geolocation": "35.94959, 14.38033",
   "agent_id": {
     "$oid": "67d2e7cac82bd3de6f84f7fb"
   },
   "gallery_id": {
     "$oid": "67dac696a01f6c6b895279d0"
+  },
+  "review_id": []
+},
+{
+  "_id": {
+    "$oid": "67f6490e0744e2407a2a9505"
+  },
+  "name": "Rome Historical Tour",
+  "type": "Travel",
+  "description": "Explore the ancient wonders of Rome including the Colosseum.",
+  "address": "Piazza del Colosseo, 1, 00184 Roma RM, Italy",
+  "price": 480,
+  "rating": 4.8,
+  "image": "https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=1996&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "geolocation": "41.8902, 12.4922",
+  "agent_id": {
+    "$oid": "67d2e76cc82bd3de6f84f7fa"
+  },
+  "gallery_id": {
+    "$oid": "681f5e809d757b6f83d1995a"
+  },
+  "review_id": []
+},
+{
+  "_id": {
+    "$oid": "67f649d40744e2407a2a9509"
+  },
+  "name": "Wellness Retreat in Bali",
+  "type": "Health",
+  "description": "A relaxing retreat featuring yoga and spa treatments",
+  "address": "Jl. Hanoman, Ubud, Bali, Indonesia",
+  "price": 900,
+  "rating": 4.9,
+  "image": "https://images.unsplash.com/photo-1573790387438-4da905039392?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "geolocation": "-8.506, 115.262",
+  "agent_id": {
+    "$oid": "67d2e76cc82bd3de6f84f7fa"
+  },
+  "gallery_id": {
+    "$oid": "681f5a7b9d757b6f83d19938"
+  },
+  "review_id": []
+},
+{
+  "_id": {
+    "$oid": "67f64a930744e2407a2a950a"
+  },
+  "name": "Crypto Investment Bootcamp",
+  "type": "Finance",
+  "description": "A weekend course in London teaching the basics of cryptocurrency investing.",
+  "address": "1 Canada Square, Canary Wharf, London E14 5AB, UK",
+  "price": 750,
+  "rating": 4.5,
+  "image": "https://images.unsplash.com/photo-1621504450181-5d356f61d307?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "geolocation": "51.5055, -0.0235",
+  "agent_id": {
+    "$oid": "67cef9836ea754bbcec4c049"
+  },
+  "gallery_id": {
+    "$oid": "681f5aea9d757b6f83d1993b"
+  },
+  "review_id": []
+},
+{
+  "_id": {
+    "$oid": "67f64afe0744e2407a2a950b"
+  },
+  "name": "Pottery Workshop in Kyoto",
+  "type": "Hobbies",
+  "description": "Hands-on Japanese pottery-making class in a traditional studio setting.",
+  "address": "Higashiyama Ward, Kyoto, Japan",
+  "price": 120,
+  "rating": 4.7,
+  "image": "https://images.unsplash.com/photo-1590605095243-072811dbe64c?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "geolocation": "35.0116, 135.7681",
+  "agent_id": {
+    "$oid": "67d2e7cac82bd3de6f84f7fb"
+  },
+  "gallery_id": {
+    "$oid": "681f5b729d757b6f83d1993c"
+  },
+  "review_id": []
+},
+{
+  "_id": {
+    "$oid": "67f64b340744e2407a2a950c"
+  },
+  "name": "Barcelona Tapas Tour",
+  "type": "Food",
+  "description": "Explore authentic Spanish tapas across local markets and hidden restaurants.",
+  "address": "La Boqueria Market, Barcelona, Spain",
+  "price": 95,
+  "rating": 4.8,
+  "image": "https://images.unsplash.com/photo-1619941862585-cd4fa9a4c2cb?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "geolocation": "41.3825, 2.1769",
+  "agent_id": {
+    "$oid": "67cef9836ea754bbcec4c049"
+  },
+  "gallery_id": {
+    "$oid": "681f5bfd9d757b6f83d1993d"
+  },
+  "review_id": []
+},
+{
+  "_id": {
+    "$oid": "67f64c2f0744e2407a2a950e"
+  },
+  "name": "Naples Pizza Making Class",
+  "type": "Food",
+  "description": "Learn to make authentic Neapolitan pizza with local chefs in the heart of Naples.",
+  "address": "Via dei Tribunali, 80138 Napoli NA, Italy",
+  "price": 100,
+  "rating": 4.8,
+  "image": "https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cGl6emF8ZW58MHx8MHx8fDA%3D",
+  "geolocation": "40.8518, 14.2594",
+  "agent_id": {
+    "$oid": "67d2e7cac82bd3de6f84f7fb"
+  },
+  "gallery_id": {
+    "$oid": "681f5c509d757b6f83d1993e"
   },
   "review_id": []
 }]

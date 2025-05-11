@@ -1,12 +1,113 @@
 [{
   "_id": {
-    "$oid": "67cca53328452d26b9b2da93"
+    "$oid": "680a327e6d82ff9dbd45a20e"
+  },
+  "title": "Travel to Spain",
+  "user_id": {
+    "$oid": "67cc991928452d26b9b2da88"
+  },
+  "bucketlistpoints": [
+    {
+      "$oid": "6820c890abda76b963144d7e"
+    },
+    {
+      "$oid": "6820c890abda76b963144d7f"
+    },
+    {
+      "$oid": "6820c890abda76b963144d80"
+    }
+  ],
+  "experience": [
+    {
+      "$oid": "67d2ea76c82bd3de6f84f809"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6820bd6bf83dfb297635b439"
   },
   "user_id": {
     "$oid": "67cc991928452d26b9b2da88"
   },
-  "title": "First List",
-  "created": {
-    "$date": "2024-03-08T11:30:00.000Z"
-  }
+  "title": "See the Northern Lights",
+  "bucketlistpoints": [
+    {
+      "$oid": "6820c924abda76b963144d85"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6820be8ef83dfb297635b43c"
+  },
+  "user_id": {
+    "$oid": "67cc991928452d26b9b2da88"
+  },
+  "title": "Taste Exotic Foods",
+  "bucketlistpoints": [
+    {
+      "$oid": "6820c912abda76b963144d82"
+    },
+    {
+      "$oid": "6820c912abda76b963144d83"
+    },
+    {
+      "$oid": "6820c912abda76b963144d84"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6820c08dabda76b963144d7b"
+  },
+  "user_id": {
+    "$oid": "67cc991928452d26b9b2da88"
+  },
+  "title": "Parachuting",
+  "bucketlistpoints": [
+    {
+      "$oid": "6820c962abda76b963144d86"
+    },
+    {
+      "$oid": "6820c962abda76b963144d87"
+    },
+    {
+      "$oid": "6820c962abda76b963144d88"
+    },
+    {
+      "$oid": "6820c962abda76b963144d89"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6820c98eabda76b963144d8c"
+  },
+  "user_id": {
+    "$oid": "67cc991928452d26b9b2da88"
+  },
+  "title": "Attend Wine Tasting",
+  "bucketlistpoints": [
+    {
+      "$oid": "6820e587abda76b963144d8f"
+    },
+    {
+      "$oid": "6820e587abda76b963144d90"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6820e7eeabda76b963144d92"
+  },
+  "user_id": {
+    "$oid": "67cc991928452d26b9b2da88"
+  },
+  "title": "Travel to france",
+  "bucketlistpoints": [
+    {
+      "$oid": "6820e7eeabda76b963144d91"
+    }
+  ]
 }]
