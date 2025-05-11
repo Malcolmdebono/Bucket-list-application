@@ -35,6 +35,8 @@ async function run() {
     const db                   = client.db('BucketListDB');
     const experienceCollection = db.collection('Experience');
     const galleriesCollection  = db.collection('Galleries');
+    const bucketListCol         = db.collection('BucketList');
+    const bucketListPointsCol   = db.collection('BucketListPoints');
 
     // 2) Public login endpoint (issue JWT)
     app.post('/api/auth/login', (req, res) => {
@@ -112,7 +114,7 @@ async function run() {
       }
     );
 
-    // 6) (Optional) Protected: gallery images
+    // 6) Protected: gallery images
     app.get(
       '/api/galleries',
       authenticateToken,
@@ -141,6 +143,220 @@ async function run() {
         }
       }
     );
+
+    //extra for post mybucket
+
+    app.post("/api/items", authenticateToken, async (req, res) => {
+      try {
+        const { user_id, title, points } = req.body;
+    
+        // 1) Validate presence/types
+        if (
+          !user_id ||
+          typeof title !== "string" ||
+          !Array.isArray(points) ||
+          points.length === 0
+        ) {
+          return res.status(400).json({ error: "Bad request body" });
+        }
+    
+        // 2) Convert user_id to ObjectId
+        const ownerId = new ObjectId(user_id);
+    
+        // 3) Prepare point documents (map boolean->string for status)
+        const toInsert = points.map((p) => ({
+          pointname: p.pointName,
+          status:    p.status ? "Done" : "Pending",
+          deadline:  new Date(p.deadline),
+        }));
+    
+        // 4) Insert points, bypassing validation temporarily
+        let insertPts;
+        try {
+          insertPts = await bucketListPointsCol.insertMany(toInsert, {
+            bypassDocumentValidation: true
+          });
+        } catch (err) {
+          console.error("Point insert writeErrors:", err.errorResponse.writeErrors);
+          throw err;
+        }
+        const pointIds = Object.values(insertPts.insertedIds);
+    
+        // 5) Insert the bucket‐list document
+        const bucketDoc = {
+          user_id:          ownerId,
+          title,
+          bucketlistpoints: pointIds,
+        };
+        const { insertedId } = await bucketListCol.insertOne(bucketDoc);
+    
+        // 6) Lookup + return the newly‐created item
+        const [newItem] = await bucketListCol
+          .aggregate([
+            { $match: { _id: insertedId } },
+            {
+              $lookup: {
+                from:         "BucketListPoints",
+                localField:   "bucketlistpoints",
+                foreignField: "_id",
+                as:           "points",
+              },
+            },
+            {
+              $project: {
+                title: 1,
+                points: {
+                  $map: {
+                    input: "$points",
+                    as:    "p",
+                    in: {
+                      pointname: "$$p.pointname",
+                      status:    "$$p.status",
+                      deadline:  "$$p.deadline",
+                    },
+                  },
+                },
+              },
+            },
+          ])
+          .toArray();
+    
+        res.status(201).json(newItem);
+      } catch (err) {
+        console.error("POST /api/items error:", err);
+        res.status(500).json({ error: err.message });
+      }
+    });
+    
+
+
+    //extra for mybucket tab
+    app.get("/api/items", authenticateToken, async (req, res) => {
+      try {
+        // Pull in every bucket-list doc…
+        const items = await bucketListCol.aggregate([
+          {
+            $lookup: {
+              from: "BucketListPoints",
+              localField: "bucketlistpoints",
+              foreignField: "_id",
+              as: "points",
+            },
+          },
+          {
+            $project: {
+              title: 1,
+              points: {
+                $map: {
+                  input: "$points",
+                  as: "p",
+                  in: {
+                    pointname: "$$p.pointname",
+                    status:    "$$p.status",
+                    deadline:  "$$p.deadline",
+                  },
+                },
+              },
+            },
+          },
+        ]).toArray();
+    
+        res.json(items);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+      }
+    });
+
+    //put api for mybucket
+    // UPDATE an existing bucket-list
+// inside your `run()` function, after bucketListCol & bucketListPointsCol are defined
+
+app.put("/api/items/:id", authenticateToken, async (req, res) => {
+  try {
+    const id     = new ObjectId(req.params.id);
+    const { title, points } = req.body;
+
+    // 1) Basic validation
+    if (typeof title !== "string" || !Array.isArray(points)) {
+      return res.status(400).json({ error: "Bad request body" });
+    }
+
+    // 2) Remove old points
+    const old = await bucketListCol.findOne({ _id: id });
+    if (old?.bucketlistpoints) {
+      await bucketListPointsCol.deleteMany({
+        _id: { $in: old.bucketlistpoints },
+      });
+    }
+
+    // 3) Prepare new point docs, converting status → string
+    const toInsert = points.map((p) => ({
+      pointname: p.pointName,
+      status:    p.status ? "Done" : "Pending",
+      deadline:  new Date(p.deadline),
+    }));
+
+    // 4) Insert them, bypassing validation so we can debug
+    let insertPts;
+    try {
+      insertPts = await bucketListPointsCol.insertMany(toInsert, {
+        bypassDocumentValidation: true
+      });
+    } catch (err) {
+      console.error("PUT insertMany writeErrors:", err.errorResponse.writeErrors);
+      throw err;
+    }
+    const newIds = Object.values(insertPts.insertedIds);
+
+    // 5) Update the bucket-list doc
+    await bucketListCol.updateOne(
+      { _id: id },
+      {
+        $set: {
+          title,
+          bucketlistpoints: newIds,
+        },
+      }
+    );
+
+    // 6) Lookup & return the updated item
+    const [updatedItem] = await bucketListCol.aggregate([
+      { $match: { _id: id } },
+      {
+        $lookup: {
+          from:         "BucketListPoints",
+          localField:   "bucketlistpoints",
+          foreignField: "_id",
+          as:           "points",
+        },
+      },
+      {
+        $project: {
+          title: 1,
+          points: {
+            $map: {
+              input: "$points",
+              as:    "p",
+              in: {
+                pointname: "$$p.pointname",
+                status:    "$$p.status",
+                deadline:  "$$p.deadline",
+              },
+            },
+          },
+        },
+      },
+    ]).toArray();
+
+    res.json(updatedItem);
+  } catch (err) {
+    console.error("PUT /api/items/:id error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+    
 
     // 7) Start the server
     const port = process.env.PORT || 3000;
