@@ -34,7 +34,7 @@ export default function Explore() {
 
   // Hard-coded JWT for quick testing
   const TEST_JWT =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluX3ZpbGxpeWFtMiIsImlhdCI6MTc0NjM5ODMzOSwiZXhwIjoxNzQ2NDAxOTM5fQ.0vqMLjpn2ybJweBSbkjSOA_XQOPf9UumAnIMQ5evt1U";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluX3ZpbGxpeWFtMiIsImlhdCI6MTc0Njk4NTk5MSwiZXhwIjoxNzQ2OTg5NTkxfQ.9PAq3VVncYJFUIoh9VBoWJ2bJ6KjCCsJJ1H4jMr415s";
 
   // Function to fetch experiences from your backend.
   async function fetchExperiences(filter: string, query: string, limit: number) {

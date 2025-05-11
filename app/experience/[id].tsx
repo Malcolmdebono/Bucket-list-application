@@ -30,7 +30,7 @@ export default function ExperienceDetail() {
     async function loadExp() {
       setLoadingExp(true);
       try {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluX3ZpbGxpeWFtMiIsImlhdCI6MTc0NjM5ODMzOSwiZXhwIjoxNzQ2NDAxOTM5fQ.0vqMLjpn2ybJweBSbkjSOA_XQOPf9UumAnIMQ5evt1U";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluX3ZpbGxpeWFtMiIsImlhdCI6MTc0Njk4NTk5MSwiZXhwIjoxNzQ2OTg5NTkxfQ.9PAq3VVncYJFUIoh9VBoWJ2bJ6KjCCsJJ1H4jMr415s";
         console.log("→ GET", `${BASE_URL}/api/experience/${id}`, token);
         const res = await fetch(`${BASE_URL}/api/experience/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -61,7 +61,7 @@ export default function ExperienceDetail() {
     async function loadGallery() {
       setLoadingGal(true);
       try {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluX3ZpbGxpeWFtMiIsImlhdCI6MTc0NjM5NDA5OSwiZXhwIjoxNzQ2Mzk3Njk5fQ.lXr-c3m9hbK5_M7V8cX9WpvTL8CMyB_cL7Wi-gPou9w";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluX3ZpbGxpeWFtMiIsImlhdCI6MTc0Njk4NTk5MSwiZXhwIjoxNzQ2OTg5NTkxfQ.9PAq3VVncYJFUIoh9VBoWJ2bJ6KjCCsJJ1H4jMr415s";
         const url   = `${BASE_URL}/api/galleries?galleryId=${encodeURIComponent(
           exp.gallery_id
         )}`;
